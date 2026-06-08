@@ -356,7 +356,7 @@ function Hero() {
         <h1 className="font-display leading-[1.02] tracking-tight text-[clamp(2.6rem,8vw,6.5rem)]">
           <span className="italic font-bold text-[#0f0c0a]">Hello, </span>
           <span className="font-bold text-[#0f0c0a]">I'm </span>
-           <span className="text-gradient-brand font-bold">Paolo Hildawa</span>
+           <span className="text-gradient-brand font-bold">Jill Añonuevo</span>
         </h1>
 
         <p
