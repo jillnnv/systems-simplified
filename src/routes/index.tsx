@@ -359,7 +359,7 @@ function Hero() {
           <span className="text-gradient-brand font-bold">Jill Añonuevo</span>
         </h1>
 
-        <p className="mt-5 text-base md:text-xl font-medium text-[var(--ink-soft)] tracking-wide text-slate-100">
+        <p className="mt-5 text-base md:text-xl font-medium text-[var(--ink-soft)] tracking-wide text-slate-50">
           Operations, Systems &amp; Workflow Automation Specialist
         </p>
 
