@@ -7,6 +7,8 @@ const ROLES = [
   "Build Scalable Workflows",
 ];
 
+const ANIMATED_GRADIENT = "linear-gradient(90deg, #fec438, #f7b733)";
+
 export function TypingRoles() {
   const [idx, setIdx] = useState(0);
   const [text, setText] = useState("");
@@ -35,8 +37,18 @@ export function TypingRoles() {
 
   return (
     <div className="flex items-center justify-center gap-2 text-xl md:text-3xl font-semibold min-h-[2.5rem]">
-      <span className="text-[var(--ink)]">I</span>
-      <span className="text-gradient-brand">{text}</span>
+      <span className="text-[#0f0c0a]">I</span>
+      <span
+        style={{
+          background: ANIMATED_GRADIENT,
+          WebkitBackgroundClip: "text",
+          backgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          color: "transparent",
+        }}
+      >
+        {text}
+      </span>
       <span
         className="animate-caret inline-block w-[2px] h-[1.1em] translate-y-[2px]"
         style={{ background: "#f77b31" }}

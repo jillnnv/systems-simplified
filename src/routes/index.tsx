@@ -359,7 +359,10 @@ function Hero() {
           <span className="text-gradient-brand font-bold">Jill Añonuevo</span>
         </h1>
 
-        <p className="mt-5 text-base md:text-xl font-medium text-[var(--ink-soft)] tracking-wide text-slate-50">
+        <p
+          className="mt-5 text-sm md:text-base font-medium uppercase"
+          style={{ color: "#f77b31", letterSpacing: "0.25em" }}
+        >
           Operations, Systems &amp; Workflow Automation Specialist
         </p>
 
@@ -409,18 +412,14 @@ function About() {
   return (
     <section id="about" className="py-24 md:py-28 bg-[var(--warm-50)]">
       <div className="max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-12 md:gap-16 items-start">
-        {/* LEFT: headshot + name + title + stats */}
+        {/* LEFT: clean headshot only */}
         <div className="flex flex-col items-center md:items-start">
-          <div className="relative w-full max-w-sm">
-            <div
-              className="absolute -inset-5 rounded-[36px] opacity-90 blur-[2px]"
-              style={{ background: "var(--gradient-brand)" }}
-              aria-hidden
-            />
+          <div className="w-full max-w-sm">
             <img
               src={headshotAsset.url}
               alt="Portrait of Jill Añonuevo"
-              className="relative w-full rounded-[28px] shadow-card-soft object-cover"
+              className="w-full object-cover"
+              style={{ borderRadius: "24px", boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}
             />
           </div>
 
@@ -431,28 +430,6 @@ function About() {
             <p className="mt-1 text-sm md:text-base text-[var(--ink-soft)] font-medium">
               Operations, Systems &amp; Workflow Automation Specialist
             </p>
-          </div>
-
-          <div className="mt-8 w-full max-w-sm">
-            <p className="text-xs uppercase tracking-[0.22em] font-semibold text-[var(--ink-soft)] mb-4">
-              By the Numbers
-            </p>
-            <div className="space-y-3">
-              {STATS.map((s) => (
-                <div
-                  key={s.label}
-                  className="flex items-center gap-4 rounded-2xl bg-white border border-black/5 px-4 py-3.5 shadow-[0_8px_24px_-18px_rgba(247,123,49,0.35)]"
-                >
-                  <div
-                    className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-white font-display font-semibold"
-                    style={{ background: "var(--gradient-brand)" }}
-                  >
-                    {s.value}
-                  </div>
-                  <div className="text-sm text-[var(--ink-soft)] leading-snug">{s.label}</div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
 
@@ -471,11 +448,6 @@ function About() {
               Today, I specialize in workflow automation and process improvement—designing
               solutions that reduce manual work, streamline operations, and create more
               scalable systems using tools like Zapier, Make, and GoHighLevel.
-            </p>
-            <p>
-              My approach is simple: understand how your business actually works, then build
-              the systems and automations that quietly remove friction so you can focus on
-              growth.
             </p>
           </div>
         </div>
@@ -538,10 +510,16 @@ function Services() {
           {firstRow.map((s) => card(s))}
         </div>
 
-        {/* Second row: 2 cards centered on desktop */}
-        <div className="mt-6 md:mt-7 grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
-          <div className="hidden lg:block" aria-hidden />
-          {secondRow.map((s) => card(s))}
+        {/* Second row: 2 cards centered, matching first-row card width */}
+        <div className="mt-6 md:mt-7 flex flex-wrap justify-center gap-6 md:gap-7">
+          {secondRow.map((s) => (
+            <div
+              key={s.title}
+              className="w-full md:w-[calc((100%-1.75rem)/2)] lg:w-[calc((100%-3.5rem)/3)] flex"
+            >
+              {card(s)}
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -640,7 +618,9 @@ function Projects() {
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors" />
               </button>
               <div className="p-6 md:p-7 flex-1 flex flex-col">
-                <h3 className="text-xl md:text-2xl font-extrabold leading-snug text-gradient-brand">
+                <h3
+                  className="text-xl md:text-2xl font-extrabold leading-snug text-[#0f0c0a] transition-all duration-300 group-hover:[background:linear-gradient(90deg,#fec438,#f77b31)] group-hover:[-webkit-background-clip:text] group-hover:[background-clip:text] group-hover:[-webkit-text-fill-color:transparent] group-hover:text-transparent"
+                >
                   {p.title}
                 </h3>
                 <p className="mt-3 text-[var(--ink-soft)] text-[15px] leading-relaxed flex-1">
