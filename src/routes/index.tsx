@@ -17,7 +17,7 @@ import {
 
 import headshotAsset from "@/assets/headshot.png.asset.json";
 import heroVideoAsset from "@/assets/hero-bg.mp4.asset.json";
-const logoAsset = { url: "https://d071a9a9-b0b9-45a1-8e87-7c9fd100c453.lovableproject.com/__l5e/assets-v1/d071a9a9-b0b9-45a1-8e87-7c9fd100c453/logo.png" }; // Placeholder for direct asset replacement
+import logoAsset from "@/assets/logo-new.png.asset.json";
 import { TypingRoles } from "@/components/portfolio/TypingRoles";
 import { Lightbox } from "@/components/portfolio/Lightbox";
 import { TestimonialsCarousel } from "@/components/portfolio/TestimonialsCarousel";
