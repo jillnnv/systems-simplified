@@ -92,6 +92,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Jill Añonuevo — Workflow & Automation Specialist" },
+      { name: "description", content: "A professional portfolio website showcasing Jill Añonuevo's expertise in workflow automation and systems implementation." },
+      { property: "og:description", content: "A professional portfolio website showcasing Jill Añonuevo's expertise in workflow automation and systems implementation." },
+      { name: "twitter:description", content: "A professional portfolio website showcasing Jill Añonuevo's expertise in workflow automation and systems implementation." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/cc4765c4-039d-4742-8f39-12af835d7a26/id-preview-75027a74--10287a8f-12c4-445c-81d0-01598a1fe3b3.lovable.app-1780918336240.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/cc4765c4-039d-4742-8f39-12af835d7a26/id-preview-75027a74--10287a8f-12c4-445c-81d0-01598a1fe3b3.lovable.app-1780918336240.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
