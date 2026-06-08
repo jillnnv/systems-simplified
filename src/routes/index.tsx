@@ -537,24 +537,10 @@ function Services() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
           {firstRow.map((s) => card(s))}
         </div>
-        <div className="mt-6 md:mt-7 grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 lg:[&>*:first-child]:lg:col-start-1 lg:max-w-[calc(66.6667%+1.75rem*0.333)]">
-          {/* Centered 2-card row on desktop */}
-        </div>
-        <div className="mt-6 md:mt-7 hidden lg:grid grid-cols-3 gap-7">
-          <div />
-          {secondRow.slice(0, 1).map((s) => card(s))}
-          <div />
-        </div>
-        <div className="mt-6 md:mt-7 lg:grid hidden grid-cols-3 gap-7">
-          {/* placeholder — replaced by JS-free layout below */}
-        </div>
-        {/* Simpler approach: replace the above three blocks visually with one row that uses col-span centering */}
-      </div>
 
-      {/* Clean second row: visible across breakpoints */}
-      <div className="max-w-7xl mx-auto px-5 md:px-8 mt-6 md:mt-7">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
-          <div className="hidden lg:block" />
+        {/* Second row: 2 cards centered on desktop */}
+        <div className="mt-6 md:mt-7 grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
+          <div className="hidden lg:block" aria-hidden />
           {secondRow.map((s) => card(s))}
         </div>
       </div>
