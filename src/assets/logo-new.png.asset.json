@@ -1,0 +1,2 @@
+import logoNew from "./logo-new.png";
+export default { url: logoNew };

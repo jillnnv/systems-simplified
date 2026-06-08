@@ -17,7 +17,7 @@ import {
 
 import headshotAsset from "@/assets/headshot.png.asset.json";
 import heroVideoAsset from "@/assets/hero-bg.mp4.asset.json";
-import logoAsset from "@/assets/logo.png.asset.json";
+import logoAsset from "@/assets/logo-new.png.asset.json";
 import { TypingRoles } from "@/components/portfolio/TypingRoles";
 import { Lightbox } from "@/components/portfolio/Lightbox";
 import { TestimonialsCarousel } from "@/components/portfolio/TestimonialsCarousel";
@@ -359,7 +359,7 @@ function Hero() {
           <span className="text-gradient-brand font-bold">Jill Añonuevo</span>
         </h1>
 
-        <p className="mt-5 text-base md:text-xl font-medium text-[var(--ink-soft)] tracking-wide">
+        <p className="mt-5 text-base md:text-xl font-medium text-[var(--ink-soft)] tracking-wide text-slate-100">
           Operations, Systems &amp; Workflow Automation Specialist
         </p>
 
