@@ -10,7 +10,6 @@ import {
   Cog,
   Database,
   Handshake,
-  Quote,
   Briefcase,
   Globe,
   ExternalLink,
@@ -18,8 +17,10 @@ import {
 
 import headshotAsset from "@/assets/headshot.png.asset.json";
 import heroVideoAsset from "@/assets/hero-bg.mp4.asset.json";
+import logoAsset from "@/assets/logo.png.asset.json";
 import { TypingRoles } from "@/components/portfolio/TypingRoles";
 import { Lightbox } from "@/components/portfolio/Lightbox";
+import { TestimonialsCarousel } from "@/components/portfolio/TestimonialsCarousel";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -81,16 +82,6 @@ const SERVICES = [
     ],
   },
   {
-    Icon: Cog,
-    title: "Systems Implementation & Process Improvement",
-    items: [
-      "Workflow Audits & Documentation",
-      "SOP Creation",
-      "Workflow Mapping",
-      "Process Standardization",
-    ],
-  },
-  {
     Icon: Database,
     title: "CRM & Operational Solutions",
     items: [
@@ -98,6 +89,16 @@ const SERVICES = [
       "CRM Optimization",
       "Pipeline Management Systems",
       "Customer Journey Automation",
+    ],
+  },
+  {
+    Icon: Cog,
+    title: "Systems Implementation & Process Improvement",
+    items: [
+      "Workflow Audits & Documentation",
+      "SOP Creation",
+      "Workflow Mapping",
+      "Process Standardization",
     ],
   },
   {
@@ -112,22 +113,21 @@ const SERVICES = [
   },
 ];
 
-const TOOLS = [
-  "Zapier",
-  "Make",
-  "GoHighLevel",
-  "Google Workspace",
-  "HubSpot",
-  "ClickUp",
-  "Trello",
-  "Slack",
-  "Notion",
-  "Airtable",
+const TOOLS: { name: string; slug: string; color: string }[] = [
+  { name: "Zapier", slug: "zapier", color: "FF4F00" },
+  { name: "Make", slug: "make", color: "6D00CC" },
+  { name: "GoHighLevel", slug: "", color: "" },
+  { name: "Google Workspace", slug: "googleworkspace", color: "4285F4" },
+  { name: "HubSpot", slug: "hubspot", color: "FF7A59" },
+  { name: "ClickUp", slug: "clickup", color: "7B68EE" },
+  { name: "Trello", slug: "trello", color: "0052CC" },
+  { name: "Slack", slug: "slack", color: "4A154B" },
+  { name: "Notion", slug: "notion", color: "000000" },
+  { name: "Airtable", slug: "airtable", color: "18BFFF" },
 ];
 
 type Project = {
   title: string;
-  category: string;
   description: string;
   image: string;
   tools: string[];
@@ -137,7 +137,6 @@ type Project = {
 const PROJECTS: Project[] = [
   {
     title: "New Lead Workflow Automation",
-    category: "Workflow Automation",
     description:
       "Designed an end-to-end lead intake flow that captures, enriches, and routes new leads to the right rep in seconds.",
     image:
@@ -146,7 +145,6 @@ const PROJECTS: Project[] = [
   },
   {
     title: "CRM Workflow Optimization",
-    category: "CRM Optimization",
     description:
       "Restructured pipelines, automated stage transitions, and built reporting dashboards for clearer pipeline visibility.",
     image:
@@ -155,7 +153,6 @@ const PROJECTS: Project[] = [
   },
   {
     title: "Client Onboarding Automation",
-    category: "Process Automation",
     description:
       "Replaced a manual onboarding checklist with an automated sequence covering contracts, intake forms, and kickoff emails.",
     image:
@@ -164,7 +161,6 @@ const PROJECTS: Project[] = [
   },
   {
     title: "Operations Process Documentation",
-    category: "Systems Implementation",
     description:
       "Built a centralized SOP library with workflow maps and quick-reference guides for new team members.",
     image:
@@ -173,7 +169,6 @@ const PROJECTS: Project[] = [
   },
   {
     title: "Automated Reporting Suite",
-    category: "Reporting Automation",
     description:
       "Set up scheduled reports that pull live metrics from multiple platforms and deliver weekly summaries to stakeholders.",
     image:
@@ -182,7 +177,6 @@ const PROJECTS: Project[] = [
   },
   {
     title: "AI-Assisted Knowledge Base",
-    category: "AI Systems",
     description:
       "Implemented an AI-powered internal knowledge base for instant answers to recurring team and client questions.",
     image:
@@ -214,12 +208,24 @@ const TESTIMONIALS = [
 
 const STATS = [
   { value: "3+", label: "Years Operations & Implementation Experience" },
-  { value: "60+", label: "Client Implementations Managed & Delivered" },
-  { value: "B2B & B2C", label: "Cross-Industry Experience" },
+  { value: "60+", label: "Projects Managed & Delivered for B2B & B2C Clients" },
   { value: "Multi", label: "Platforms & Systems Implemented" },
 ];
 
+const BRAND_GLOW =
+  "0 18px 50px -20px rgba(247,123,49,0.35), 0 8px 24px -12px rgba(254,196,56,0.25)";
+
 /* ---------------- COMPONENTS ---------------- */
+
+function Logo({ className = "h-10 md:h-11" }: { className?: string }) {
+  return (
+    <img
+      src={logoAsset.url}
+      alt="Jill Añonuevo"
+      className={`${className} w-auto object-contain`}
+    />
+  );
+}
 
 function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -244,7 +250,7 @@ function Header() {
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/75 backdrop-blur-xl border-b border-black/5 shadow-[0_4px_24px_-12px_rgba(0,0,0,0.08)]"
+          ? "bg-white/80 backdrop-blur-xl border-b border-black/5 shadow-[0_4px_24px_-12px_rgba(0,0,0,0.08)]"
           : "bg-transparent"
       }`}
     >
@@ -252,19 +258,10 @@ function Header() {
         <a
           href="#top"
           onClick={(e) => smooth(e, "#top")}
-          className="flex items-center gap-2 group"
+          className="flex items-center"
           aria-label="Jill Añonuevo home"
         >
-          {/* Logo slot — swap inner span for <img src=... /> later */}
-          <span
-            className="inline-flex items-center justify-center w-10 h-10 md:w-11 md:h-11 rounded-xl text-white font-display font-semibold text-lg shadow-cta"
-            style={{ background: "var(--gradient-brand)" }}
-          >
-            JA
-          </span>
-          <span className="hidden sm:block font-display text-lg md:text-xl tracking-tight text-[var(--ink)]">
-            Jill Añonuevo
-          </span>
+          <Logo />
         </a>
 
         <nav className="hidden md:flex items-center gap-8">
@@ -335,8 +332,10 @@ function Header() {
 
 function Hero() {
   return (
-    <section id="top" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-20">
-      {/* Video background */}
+    <section
+      id="top"
+      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-20"
+    >
       <video
         className="absolute inset-0 w-full h-full object-cover"
         src={heroVideoAsset.url}
@@ -354,22 +353,22 @@ function Hero() {
       />
 
       <div className="relative z-10 max-w-5xl mx-auto px-5 md:px-8 text-center py-24">
-        <p className="inline-block text-xs md:text-sm uppercase tracking-[0.25em] font-medium text-[var(--ink-soft)] mb-6">
-          <span className="text-gradient-brand">Workflow & Automation Specialist</span>
-        </p>
-
-        <h1 className="font-display font-medium leading-[1.02] tracking-tight text-[clamp(2.6rem,8vw,6.5rem)] text-[var(--ink)]">
-          <span className="block md:inline">Hello, I'm </span>
-          <span className="text-gradient-brand italic">Jill Añonuevo</span>
+        <h1 className="font-display leading-[1.02] tracking-tight text-[clamp(2.6rem,8vw,6.5rem)]">
+          <span className="italic font-bold text-[#0f0c0a]">Hello, </span>
+          <span className="font-bold text-[#0f0c0a]">I'm </span>
+          <span className="text-gradient-brand font-bold">Jill Añonuevo</span>
         </h1>
 
-        <div className="mt-6">
+        <p className="mt-5 text-base md:text-xl font-medium text-[var(--ink-soft)] tracking-wide">
+          Operations, Systems &amp; Workflow Automation Specialist
+        </p>
+
+        <div className="mt-8">
           <TypingRoles />
         </div>
 
         <p className="mt-7 max-w-2xl mx-auto text-base md:text-lg text-[var(--ink-soft)] leading-relaxed">
-          I build efficient processes that reduce manual work, improve efficiency, and help
-          businesses scale more effectively.
+          I help businesses spend less time managing processes and more time focusing on growth.
         </p>
 
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
@@ -384,16 +383,6 @@ function Hero() {
           >
             View Projects <ArrowRight size={16} />
           </a>
-          <a
-            href="#contact"
-            onClick={(e) => {
-              e.preventDefault();
-              document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
-            }}
-            className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-[var(--ink)] border border-[var(--ink)]/15 bg-white hover:bg-white/70 hover:-translate-y-0.5 transition-all duration-250"
-          >
-            Let's Connect
-          </a>
         </div>
 
         <div className="mt-10 flex items-center justify-center gap-3">
@@ -404,7 +393,8 @@ function Hero() {
               target={href.startsWith("http") ? "_blank" : undefined}
               rel="noreferrer"
               aria-label={label}
-              className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white border border-black/5 text-[var(--ink-soft)] hover:text-[var(--brand-orange)] hover:-translate-y-0.5 transition-all shadow-[0_4px_18px_-10px_rgba(0,0,0,0.18)]"
+              className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white border border-black/5 hover:-translate-y-0.5 transition-all shadow-[0_4px_18px_-10px_rgba(247,123,49,0.4)]"
+              style={{ color: "#f77b31" }}
             >
               <Icon size={18} />
             </a>
@@ -417,26 +407,58 @@ function Hero() {
 
 function About() {
   return (
-    <section id="about" className="py-24 md:py-32 bg-[var(--warm-50)]">
-      <div className="max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-14 md:gap-20 items-center">
-        <div className="relative mx-auto md:mx-0 max-w-md w-full">
-          <div
-            className="absolute -inset-6 rounded-[36px] opacity-90 blur-[2px]"
-            style={{ background: "var(--gradient-brand)" }}
-            aria-hidden
-          />
-          <img
-            src={headshotAsset.url}
-            alt="Portrait of Jill Añonuevo"
-            className="relative w-full rounded-[28px] shadow-card-soft object-cover"
-          />
+    <section id="about" className="py-24 md:py-28 bg-[var(--warm-50)]">
+      <div className="max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-12 md:gap-16 items-start">
+        {/* LEFT: headshot + name + title + stats */}
+        <div className="flex flex-col items-center md:items-start">
+          <div className="relative w-full max-w-sm">
+            <div
+              className="absolute -inset-5 rounded-[36px] opacity-90 blur-[2px]"
+              style={{ background: "var(--gradient-brand)" }}
+              aria-hidden
+            />
+            <img
+              src={headshotAsset.url}
+              alt="Portrait of Jill Añonuevo"
+              className="relative w-full rounded-[28px] shadow-card-soft object-cover"
+            />
+          </div>
+
+          <div className="mt-6 text-center md:text-left w-full max-w-sm">
+            <h3 className="font-display text-2xl md:text-3xl font-semibold text-[var(--ink)]">
+              Jill Añonuevo
+            </h3>
+            <p className="mt-1 text-sm md:text-base text-[var(--ink-soft)] font-medium">
+              Operations, Systems &amp; Workflow Automation Specialist
+            </p>
+          </div>
+
+          <div className="mt-8 w-full max-w-sm">
+            <p className="text-xs uppercase tracking-[0.22em] font-semibold text-[var(--ink-soft)] mb-4">
+              By the Numbers
+            </p>
+            <div className="space-y-3">
+              {STATS.map((s) => (
+                <div
+                  key={s.label}
+                  className="flex items-center gap-4 rounded-2xl bg-white border border-black/5 px-4 py-3.5 shadow-[0_8px_24px_-18px_rgba(247,123,49,0.35)]"
+                >
+                  <div
+                    className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-white font-display font-semibold"
+                    style={{ background: "var(--gradient-brand)" }}
+                  >
+                    {s.value}
+                  </div>
+                  <div className="text-sm text-[var(--ink-soft)] leading-snug">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div>
-          <p className="text-sm uppercase tracking-[0.22em] font-semibold text-gradient-brand mb-4">
-            About
-          </p>
-          <h2 className="font-display text-4xl md:text-5xl font-medium text-[var(--ink)] tracking-tight">
+        {/* RIGHT: storytelling only */}
+        <div className="md:pt-4">
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-[var(--ink)] tracking-tight">
             Hi, I'm Jill.
           </h2>
           <div className="mt-6 space-y-5 text-[var(--ink-soft)] leading-relaxed text-base md:text-lg">
@@ -450,27 +472,11 @@ function About() {
               solutions that reduce manual work, streamline operations, and create more
               scalable systems using tools like Zapier, Make, and GoHighLevel.
             </p>
-          </div>
-
-          <div className="mt-10">
-            <p className="text-xs uppercase tracking-[0.22em] font-semibold text-[var(--ink-soft)] mb-5">
-              By the Numbers
+            <p>
+              My approach is simple: understand how your business actually works, then build
+              the systems and automations that quietly remove friction so you can focus on
+              growth.
             </p>
-            <div className="grid grid-cols-2 gap-4">
-              {STATS.map((s) => (
-                <div
-                  key={s.label}
-                  className="rounded-2xl bg-white border border-black/5 p-5 shadow-[0_6px_24px_-16px_rgba(0,0,0,0.15)]"
-                >
-                  <div className="font-display text-3xl text-gradient-brand font-semibold">
-                    {s.value}
-                  </div>
-                  <div className="mt-1 text-sm text-[var(--ink-soft)] leading-snug">
-                    {s.label}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </div>
@@ -479,15 +485,48 @@ function About() {
 }
 
 function Services() {
+  const firstRow = SERVICES.slice(0, 3);
+  const secondRow = SERVICES.slice(3);
+
+  const card = ({ Icon, title, items }: (typeof SERVICES)[number]) => (
+    <article
+      key={title}
+      className="group rounded-3xl bg-white border border-black/[0.06] p-7 md:p-8 transition-all duration-300 hover:-translate-y-1 flex flex-col"
+      style={{ boxShadow: "0 10px 30px -22px rgba(0,0,0,0.15)" }}
+      onMouseEnter={(e) => (e.currentTarget.style.boxShadow = BRAND_GLOW)}
+      onMouseLeave={(e) =>
+        (e.currentTarget.style.boxShadow = "0 10px 30px -22px rgba(0,0,0,0.15)")
+      }
+    >
+      <div
+        className="w-[68px] h-[68px] rounded-[18px] flex items-center justify-center text-white mb-6 group-hover:brightness-110 transition"
+        style={{ background: "var(--gradient-brand)" }}
+      >
+        <Icon size={30} strokeWidth={1.75} />
+      </div>
+      <h3 className="text-xl md:text-[22px] font-bold text-[var(--ink)] leading-snug">
+        {title}
+      </h3>
+      <ul className="mt-5 space-y-2.5 text-[var(--ink-soft)] text-[15px]">
+        {items.map((i) => (
+          <li key={i} className="flex gap-2.5">
+            <span
+              className="mt-2 inline-block w-1.5 h-1.5 rounded-full shrink-0"
+              style={{ background: "var(--brand-orange)" }}
+            />
+            <span>{i}</span>
+          </li>
+        ))}
+      </ul>
+    </article>
+  );
+
   return (
     <section id="services" className="py-24 md:py-32">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-sm uppercase tracking-[0.22em] font-semibold text-gradient-brand mb-4">
-            Services
-          </p>
-          <h2 className="font-display text-4xl md:text-5xl font-medium text-[var(--ink)] tracking-tight">
-            What I help teams build
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-[var(--ink)] tracking-tight">
+            What I Offer to Clients
           </h2>
           <p className="mt-5 text-[var(--ink-soft)] text-lg">
             Premium automation, systems, and operational support — tailored to how your
@@ -496,31 +535,13 @@ function Services() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
-          {SERVICES.map(({ Icon, title, items }) => (
-            <article
-              key={title}
-              className="group rounded-3xl bg-white border border-black/[0.06] p-7 md:p-8 shadow-[0_8px_30px_-18px_rgba(0,0,0,0.18)] hover:shadow-card-soft hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 flex flex-col"
-            >
-              <div
-                className="w-[72px] h-[72px] rounded-[18px] flex items-center justify-center text-white mb-6 group-hover:brightness-110 transition"
-                style={{ background: "var(--gradient-brand)" }}
-              >
-                <Icon size={32} strokeWidth={1.75} />
-              </div>
-              <h3 className="font-display text-2xl text-[var(--ink)] leading-snug">{title}</h3>
-              <ul className="mt-5 space-y-2.5 text-[var(--ink-soft)] text-[15px]">
-                {items.map((i) => (
-                  <li key={i} className="flex gap-2.5">
-                    <span
-                      className="mt-2 inline-block w-1.5 h-1.5 rounded-full shrink-0"
-                      style={{ background: "var(--brand-orange)" }}
-                    />
-                    <span>{i}</span>
-                  </li>
-                ))}
-              </ul>
-            </article>
-          ))}
+          {firstRow.map((s) => card(s))}
+        </div>
+
+        {/* Second row: 2 cards centered on desktop */}
+        <div className="mt-6 md:mt-7 grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
+          <div className="hidden lg:block" aria-hidden />
+          {secondRow.map((s) => card(s))}
         </div>
       </div>
     </section>
@@ -532,31 +553,40 @@ function ToolsMarquee() {
     <>
       {TOOLS.concat(TOOLS).map((tool, i) => (
         <div
-          key={`${tool}-${i}`}
-          className="shrink-0 inline-flex items-center gap-2.5 rounded-full bg-white border border-black/[0.06] px-5 py-2.5 shadow-[0_4px_16px_-10px_rgba(0,0,0,0.15)] mx-2"
+          key={`${tool.name}-${i}`}
+          className="shrink-0 inline-flex items-center gap-2.5 rounded-full bg-white border border-black/[0.06] px-5 py-2.5 shadow-[0_4px_16px_-10px_rgba(247,123,49,0.25)] mx-2"
         >
-          <span
-            className="w-2 h-2 rounded-full"
-            style={{ background: "var(--gradient-brand)" }}
-          />
-          <span className="text-sm font-medium text-[var(--ink)]">{tool}</span>
+          {tool.slug ? (
+            <img
+              src={`https://cdn.simpleicons.org/${tool.slug}/${tool.color}`}
+              alt=""
+              className="w-4 h-4 object-contain"
+              loading="lazy"
+            />
+          ) : (
+            <span
+              className="w-2 h-2 rounded-full"
+              style={{ background: "var(--gradient-brand)" }}
+            />
+          )}
+          <span className="text-sm font-medium text-[var(--ink)]">{tool.name}</span>
         </div>
       ))}
     </>
   );
 
   return (
-    <section className="py-20 md:py-24 bg-[var(--warm-50)] overflow-hidden">
-      <div className="max-w-7xl mx-auto px-5 md:px-8 text-center mb-10">
+    <section className="py-10 md:py-14 bg-[var(--warm-50)] overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 md:px-8 text-center mb-6">
         <p className="text-xs uppercase tracking-[0.22em] font-semibold text-gradient-brand">
-          Tools & Platforms
+          Tools &amp; Platforms
         </p>
-        <h3 className="mt-3 font-display text-2xl md:text-3xl text-[var(--ink)]">
+        <h3 className="mt-3 text-xl md:text-2xl font-semibold text-[var(--ink)]">
           Trusted systems I work with every day
         </h3>
       </div>
 
-      <div className="relative space-y-5 group">
+      <div className="relative space-y-4 group">
         <div className="flex w-max animate-marquee-left group-hover:[animation-play-state:paused]">
           {row}
         </div>
@@ -576,11 +606,8 @@ function Projects() {
   return (
     <section id="projects" className="py-24 md:py-32">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-sm uppercase tracking-[0.22em] font-semibold text-gradient-brand mb-4">
-            Featured Projects
-          </p>
-          <h2 className="font-display text-4xl md:text-5xl font-medium text-[var(--ink)] tracking-tight">
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-[var(--ink)] tracking-tight">
             Featured Projects
           </h2>
           <p className="mt-5 text-[var(--ink-soft)] text-lg">
@@ -592,7 +619,12 @@ function Projects() {
           {PROJECTS.map((p) => (
             <article
               key={p.title}
-              className="group rounded-3xl bg-white border border-black/[0.06] overflow-hidden shadow-[0_8px_30px_-18px_rgba(0,0,0,0.18)] hover:shadow-card-soft hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 flex flex-col"
+              className="group rounded-3xl bg-white border border-black/[0.06] overflow-hidden transition-all duration-300 hover:-translate-y-1 flex flex-col"
+              style={{ boxShadow: "0 10px 30px -22px rgba(0,0,0,0.15)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.boxShadow = BRAND_GLOW)}
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.boxShadow = "0 10px 30px -22px rgba(0,0,0,0.15)")
+              }
             >
               <button
                 onClick={() => setLightbox(p)}
@@ -608,10 +640,7 @@ function Projects() {
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors" />
               </button>
               <div className="p-6 md:p-7 flex-1 flex flex-col">
-                <span className="text-[11px] uppercase tracking-[0.2em] font-semibold text-gradient-brand">
-                  {p.category}
-                </span>
-                <h3 className="mt-2 font-display text-2xl text-[var(--ink)] leading-snug">
+                <h3 className="text-xl md:text-2xl font-extrabold leading-snug text-gradient-brand">
                   {p.title}
                 </h3>
                 <p className="mt-3 text-[var(--ink-soft)] text-[15px] leading-relaxed flex-1">
@@ -621,8 +650,8 @@ function Projects() {
                   {p.tools.map((t) => (
                     <span
                       key={t}
-                      className="text-xs font-medium px-3 py-1 rounded-full text-[var(--ink)] border border-black/5"
-                      style={{ background: "rgba(254, 196, 56, 0.18)" }}
+                      className="text-xs font-medium px-3 py-1 rounded-full text-white"
+                      style={{ background: "#f77b31" }}
                     >
                       {t}
                     </span>
@@ -655,12 +684,9 @@ function Testimonials() {
   return (
     <section id="testimonials" className="py-24 md:py-32 bg-[var(--warm-50)]">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-sm uppercase tracking-[0.22em] font-semibold text-gradient-brand mb-4">
-            Testimonials
-          </p>
-          <h2 className="font-display text-4xl md:text-5xl font-medium text-[var(--ink)] tracking-tight">
-            What it's like working with me
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-[var(--ink)] tracking-tight">
+            What It's Like Working With Me
           </h2>
           <p className="mt-5 text-[var(--ink-soft)] text-lg">
             Building systems is important. Building strong working relationships is just as
@@ -668,27 +694,7 @@ function Testimonials() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 md:gap-7">
-          {TESTIMONIALS.map((t) => (
-            <figure
-              key={t.name}
-              className="rounded-3xl bg-white border border-black/[0.06] p-7 md:p-8 shadow-[0_8px_30px_-18px_rgba(0,0,0,0.18)] hover:-translate-y-1 hover:shadow-card-soft transition-all duration-300 flex flex-col"
-            >
-              <Quote
-                size={28}
-                className="text-[var(--brand-orange)] mb-4"
-                strokeWidth={2}
-              />
-              <blockquote className="text-[var(--ink)] leading-relaxed text-[17px] font-display italic">
-                "{t.quote}"
-              </blockquote>
-              <figcaption className="mt-6 pt-5 border-t border-black/5">
-                <div className="font-semibold text-[var(--ink)]">{t.name}</div>
-                <div className="text-sm text-[var(--ink-soft)] mt-0.5">{t.title}</div>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
+        <TestimonialsCarousel items={TESTIMONIALS} />
       </div>
     </section>
   );
@@ -700,84 +706,84 @@ function Contact() {
   return (
     <section id="contact" className="py-24 md:py-32">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <div className="grid lg:grid-cols-2 gap-14 lg:gap-20 items-start">
-          <div>
-            <p className="text-sm uppercase tracking-[0.22em] font-semibold text-gradient-brand mb-4">
-              Let's Connect
-            </p>
-            <h2 className="font-display text-4xl md:text-5xl font-medium text-[var(--ink)] tracking-tight leading-[1.05]">
-              Let's Build <span className="text-gradient-brand italic">Better Systems</span>
-            </h2>
-            <p className="mt-6 text-[var(--ink-soft)] text-lg leading-relaxed max-w-xl">
-              Whether you're looking to automate repetitive work, improve your processes, or
-              implement new systems, I'd love to learn more about your business and explore
-              how I can help.
-            </p>
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-[var(--ink)] tracking-tight leading-[1.05]">
+            Let's Build <span className="text-gradient-brand italic">Better Systems</span>
+          </h2>
+          <p className="mt-5 text-[var(--ink-soft)] text-lg">
+            Whether you're looking to automate repetitive work, improve your processes, or
+            implement new systems, I'd love to learn more about your business and explore how
+            I can help.
+          </p>
+        </div>
 
-            <div className="mt-8 space-y-3">
-              <a
-                href="mailto:jillnnv@gmail.com"
-                className="flex items-center gap-4 rounded-2xl bg-white border border-black/[0.06] px-5 py-4 hover:-translate-y-0.5 hover:shadow-card-soft transition-all"
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          <div className="space-y-3">
+            <a
+              href="mailto:jillnnv@gmail.com"
+              className="flex items-center gap-4 rounded-2xl bg-white border border-black/[0.06] px-5 py-4 hover:-translate-y-0.5 hover:shadow-card-soft transition-all"
+            >
+              <span
+                className="w-11 h-11 rounded-xl flex items-center justify-center text-white"
+                style={{ background: "var(--gradient-brand)" }}
               >
-                <span
-                  className="w-11 h-11 rounded-xl flex items-center justify-center text-white"
-                  style={{ background: "var(--gradient-brand)" }}
-                >
-                  <Mail size={18} />
+                <Mail size={18} />
+              </span>
+              <span>
+                <span className="block text-xs uppercase tracking-wider text-[var(--ink-soft)]">
+                  Email
                 </span>
-                <span>
-                  <span className="block text-xs uppercase tracking-wider text-[var(--ink-soft)]">
-                    Email
-                  </span>
-                  <span className="block font-medium text-[var(--ink)]">jillnnv@gmail.com</span>
-                </span>
-              </a>
-              <a
-                href="https://www.linkedin.com/in/jillanonuevo/"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-4 rounded-2xl bg-white border border-black/[0.06] px-5 py-4 hover:-translate-y-0.5 hover:shadow-card-soft transition-all"
+                <span className="block font-medium text-[var(--ink)]">jillnnv@gmail.com</span>
+              </span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/jillanonuevo/"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-4 rounded-2xl bg-white border border-black/[0.06] px-5 py-4 hover:-translate-y-0.5 hover:shadow-card-soft transition-all"
+            >
+              <span
+                className="w-11 h-11 rounded-xl flex items-center justify-center text-white"
+                style={{ background: "var(--gradient-brand)" }}
               >
-                <span
-                  className="w-11 h-11 rounded-xl flex items-center justify-center text-white"
-                  style={{ background: "var(--gradient-brand)" }}
-                >
-                  <Linkedin size={18} />
+                <Linkedin size={18} />
+              </span>
+              <span>
+                <span className="block text-xs uppercase tracking-wider text-[var(--ink-soft)]">
+                  LinkedIn
                 </span>
-                <span>
-                  <span className="block text-xs uppercase tracking-wider text-[var(--ink-soft)]">
-                    LinkedIn
-                  </span>
-                  <span className="block font-medium text-[var(--ink)]">
-                    linkedin.com/in/jillanonuevo
-                  </span>
+                <span className="block font-medium text-[var(--ink)]">
+                  linkedin.com/in/jillanonuevo
                 </span>
-              </a>
-              <a
-                href="https://wa.me/639984776203"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-4 rounded-2xl bg-white border border-black/[0.06] px-5 py-4 hover:-translate-y-0.5 hover:shadow-card-soft transition-all"
+              </span>
+            </a>
+            <a
+              href="https://wa.me/639984776203"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-4 rounded-2xl bg-white border border-black/[0.06] px-5 py-4 hover:-translate-y-0.5 hover:shadow-card-soft transition-all"
+            >
+              <span
+                className="w-11 h-11 rounded-xl flex items-center justify-center text-white"
+                style={{ background: "var(--gradient-brand)" }}
               >
-                <span
-                  className="w-11 h-11 rounded-xl flex items-center justify-center text-white"
-                  style={{ background: "var(--gradient-brand)" }}
-                >
-                  <MessageCircle size={18} />
+                <MessageCircle size={18} />
+              </span>
+              <span>
+                <span className="block text-xs uppercase tracking-wider text-[var(--ink-soft)]">
+                  WhatsApp
                 </span>
-                <span>
-                  <span className="block text-xs uppercase tracking-wider text-[var(--ink-soft)]">
-                    WhatsApp
-                  </span>
-                  <span className="block font-medium text-[var(--ink)]">+63 998 477 6203</span>
-                </span>
-              </a>
-            </div>
+                <span className="block font-medium text-[var(--ink)]">+63 998 477 6203</span>
+              </span>
+            </a>
           </div>
 
-          <div ref={calendlyRef} className="rounded-3xl overflow-hidden bg-white border border-black/[0.06] shadow-card-soft">
+          <div
+            ref={calendlyRef}
+            className="rounded-3xl overflow-hidden bg-white border border-black/[0.06] shadow-card-soft"
+          >
             <div className="p-5 border-b border-black/5">
-              <p className="font-display text-xl text-[var(--ink)]">Book a Meeting</p>
+              <p className="text-lg font-semibold text-[var(--ink)]">Book a Meeting</p>
               <p className="text-sm text-[var(--ink-soft)] mt-1">
                 Pick a time that works — I'll confirm by email.
               </p>
@@ -798,32 +804,13 @@ function Contact() {
 function Footer() {
   return (
     <footer className="py-10 border-t border-black/5 bg-white">
-      <div className="max-w-7xl mx-auto px-5 md:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <span
-            className="inline-flex items-center justify-center w-8 h-8 rounded-lg text-white font-display font-semibold text-sm"
-            style={{ background: "var(--gradient-brand)" }}
-          >
-            JA
-          </span>
-          <span className="text-sm text-[var(--ink-soft)]">
-            © {new Date().getFullYear()} Jill Añonuevo. All rights reserved.
-          </span>
-        </div>
-        <div className="flex items-center gap-3">
-          {SOCIALS.map(({ label, href, Icon }) => (
-            <a
-              key={label}
-              href={href}
-              target={href.startsWith("http") ? "_blank" : undefined}
-              rel="noreferrer"
-              aria-label={label}
-              className="text-[var(--ink-soft)] hover:text-[var(--brand-orange)] transition-colors"
-            >
-              <Icon size={18} />
-            </a>
-          ))}
-        </div>
+      <div className="max-w-7xl mx-auto px-5 md:px-8 flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
+        <span className="text-sm font-medium text-[var(--ink)]">
+          Workflow &amp; Automation Specialist
+        </span>
+        <span className="text-sm text-[var(--ink-soft)]">
+          © {new Date().getFullYear()} Jill Añonuevo. All rights reserved.
+        </span>
       </div>
     </footer>
   );
@@ -831,13 +818,13 @@ function Footer() {
 
 function Portfolio() {
   return (
-    <div className="bg-white text-[var(--ink)] min-h-screen">
+    <div className="bg-white text-[var(--ink)] min-h-screen font-sans">
       <Header />
       <main>
         <Hero />
         <About />
-        <Services />
         <ToolsMarquee />
+        <Services />
         <Projects />
         <Testimonials />
         <Contact />

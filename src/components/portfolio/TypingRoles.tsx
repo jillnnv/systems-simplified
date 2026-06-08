@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 const ROLES = [
-  "I Streamline Operations",
-  "I Implement Systems",
-  "I Optimize Processes",
-  "I Build Scalable Workflows",
+  "Streamline Operations",
+  "Implement Systems",
+  "Optimize Processes",
+  "Build Scalable Workflows",
 ];
 
 export function TypingRoles() {
@@ -34,11 +34,12 @@ export function TypingRoles() {
   }, [text, deleting, idx]);
 
   return (
-    <div className="flex items-center justify-center gap-1 text-lg md:text-2xl font-medium text-[var(--ink)] min-h-[2.25rem]">
-      <span>{text}</span>
+    <div className="flex items-center justify-center gap-2 text-xl md:text-3xl font-semibold min-h-[2.5rem]">
+      <span className="text-[var(--ink)]">I</span>
+      <span className="text-gradient-brand">{text}</span>
       <span
         className="animate-caret inline-block w-[2px] h-[1.1em] translate-y-[2px]"
-        style={{ background: "var(--brand-orange)" }}
+        style={{ background: "#f77b31" }}
         aria-hidden
       />
     </div>
